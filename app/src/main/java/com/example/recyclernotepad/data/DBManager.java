@@ -20,6 +20,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     public DBManager(@Nullable Context context) {
         super(context, DB_NAME, null, 1);
+        this.createTab();
     }
 
     @Override
@@ -34,7 +35,7 @@ public class DBManager extends SQLiteOpenHelper {
         db = getWritableDatabase();
         String sql = "create table if not exists %s(" +
                 "%s int auto increment primary key, " +
-                "%s header, " +
+                "%s text, " +
                 "%s text" +
                 ")";
         sql = String.format(sql, TAB, ID, HEADER, TEXT);
