@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.recyclernotepad.adapters.NoteAdapter;
+import com.example.recyclernotepad.adapters.NoteCursorAdapter;
 import com.example.recyclernotepad.data.DBManager;
 import com.example.recyclernotepad.data.Note;
 
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Cursor allCursor = manager.findAllCursor();
+        NoteCursorAdapter noteCursorAdapter = new NoteCursorAdapter(allCursor);
 
+        recyclerView.setAdapter(noteCursorAdapter);
     }
 }
