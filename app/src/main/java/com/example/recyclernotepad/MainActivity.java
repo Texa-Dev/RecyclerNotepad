@@ -1,7 +1,11 @@
 package com.example.recyclernotepad;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,10 +66,34 @@ public class MainActivity extends AppCompatActivity {
         for (Note note : list) {
             manager.save(note);
         }
+       // manager.deleteAll();
 
         Cursor allCursor = manager.findAllCursor();
         NoteCursorAdapter noteCursorAdapter = new NoteCursorAdapter(allCursor);
 
         recyclerView.setAdapter(noteCursorAdapter);
+
+   /*     ActivityResultLauncher<String> resultLauncher = new ActivityResultLauncher<String>() {
+            @Override
+            public void launch(String input, @Nullable ActivityOptionsCompat options) {
+
+                Log.d("FF", "launch: " + input);
+            }
+
+            @Override
+            public void unregister() {
+
+            }
+
+            @NonNull
+            @Override
+            public ActivityResultContract<String, ?> getContract() {
+                return null;
+            }
+
+        };
+        resultLauncher.launch("Test");
+        */
+
     }
 }

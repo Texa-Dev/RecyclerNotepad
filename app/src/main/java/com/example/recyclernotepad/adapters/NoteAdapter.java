@@ -42,6 +42,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         holder.headerView.setText(currentNote.getHeader());
         holder.textView.setText(currentNote.getText());
 
+
         /*holder.headerView.setOnClickListener(view -> {
                 Snackbar.make(view,"PTN PNH", BaseTransientBottomBar.LENGTH_LONG).show();
         });*/
@@ -58,6 +59,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
 
         TextView headerView;
         TextView textView;
+
 
         public NoteHolder(@NonNull View itemView) {
             super(itemView);

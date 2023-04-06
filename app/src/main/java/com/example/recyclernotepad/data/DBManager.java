@@ -83,6 +83,26 @@ public class DBManager extends SQLiteOpenHelper {
         return db.rawQuery(sql, new String[]{});
 
     }
+
+    public Note findById(int id) {
+        db = getReadableDatabase();
+        String sql = "SELECT note FROM " + TAB + " WHERE note.id=$id";
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(id)});
+        Note note = null;
+        if (cursor.moveToFirst()) {
+            String noteHeader = cursor.getString(0);
+            String noteText = cursor.getString(1);
+            note = new Note(id, noteHeader,noteText);
+        }
+        cursor.close();
+        return note;
+    }
+
+    public void deleteAll() {
+        db = getWritableDatabase();
+        String sql = "delete from "+ TAB;
+        db.execSQL(sql);
+    }
 }
 
 
