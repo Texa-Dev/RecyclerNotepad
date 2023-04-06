@@ -19,7 +19,6 @@ import java.util.List;
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     private final Context context;
     private final List<Note> notes;
-
     private final LayoutInflater inflater;
 
     public NoteAdapter(Context context, List<Note> notes) {

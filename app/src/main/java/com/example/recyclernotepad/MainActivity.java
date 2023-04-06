@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.recyclernotepad.adapters.NoteAdapter;
+import com.example.recyclernotepad.data.DBManager;
 import com.example.recyclernotepad.data.Note;
 
 import java.util.List;
@@ -33,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
                 new Note(3, "h3", "t3")
         );
 
-        NoteAdapter adapter = new NoteAdapter(this,list);
+        /*NoteAdapter adapter = new NoteAdapter(this,list);
         //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);*/
 
         /*recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
@@ -55,7 +57,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+        DBManager manager = new DBManager(this);
+        for (Note note : list) {
+            manager.save(note);
+        }
 
+        Cursor allCursor = manager.findAllCursor();
 
     }
 }
