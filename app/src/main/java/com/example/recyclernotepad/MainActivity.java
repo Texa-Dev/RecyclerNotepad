@@ -1,15 +1,23 @@
 package com.example.recyclernotepad;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +33,7 @@ import com.example.recyclernotepad.data.Note;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    final String TAG = "FF";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         DBManager manager = new DBManager(this);
-        for (Note note : list) {
+      /*  for (Note note : list) {
             manager.save(note);
-        }
-       // manager.deleteAll();
+        }*/
+        // manager.deleteAll();
 
         Cursor allCursor = manager.findAllCursor();
         NoteCursorAdapter noteCursorAdapter = new NoteCursorAdapter(allCursor);
@@ -95,5 +103,53 @@ public class MainActivity extends AppCompatActivity {
         resultLauncher.launch("Test");
         */
 
+        //Первый способ
+       /* ActivityResultLauncher<String> launcher = registerForActivityResult(
+                new ActivityResultContract<String, String>() {
+                    @NonNull
+                    @Override
+                    public Intent createIntent(@NonNull Context context, String s) {
+                        return new Intent(context, NoteActivity.class);
+                    }
+
+                    @Override
+                    public String parseResult(int status, @Nullable Intent intent) {
+                       if(status==RESULT_OK){
+                          return intent.getStringExtra("test");
+                       }
+                        Log.d("FF", "intent: " + status);
+                        return null;
+                    }
+                }, new ActivityResultCallback<String>() {
+                    @Override
+                    public void onActivityResult(String result) {
+                        Log.d("FF", "result: " + result);
+                    }
+                });
+
+        launcher.launch("Test");*/
+
+        //Второй вариант
+
+        /*ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Log.d(TAG, "result: " + result.getData().getStringExtra("test"));
+                    }
+                }
+        );
+        launcher.launch(new Intent(this,NoteActivity.class));*/
+
+        ActivityResultLauncher<String> launcher = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(),
+                result -> {
+                    Log.d(TAG, "result: " + (result));
+                }
+        );
+        launcher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        Log.d(TAG, "result: " + (checkSelfPermission("android.permission.WRITE_EXTERNAL_STORAGE")== PackageManager.PERMISSION_GRANTED));
     }
 }
+

@@ -23,5 +23,11 @@ public class NoteActivity extends AppCompatActivity {
      //   Note note = manager.findById(intent.getIntExtra("id",0));
         binding.headerNote.setText(intent.getStringExtra("header"));
         binding.textNote.setText(intent.getStringExtra("text"));
+
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("test", "NoteActivity Test");
+        setResult(RESULT_OK, resultIntent);
+        //finish();
+
     }
 }
